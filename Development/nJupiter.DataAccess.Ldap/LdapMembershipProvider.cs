@@ -30,6 +30,7 @@ using System.Web.Security;
 using nJupiter.Abstraction.Logging;
 using nJupiter.DataAccess.Ldap.Configuration;
 using nJupiter.DataAccess.Ldap.DirectoryServices;
+using nJupiter.DataAccess.Ldap.Extensions;
 
 namespace nJupiter.DataAccess.Ldap {
 
@@ -63,17 +64,17 @@ namespace nJupiter.DataAccess.Ldap {
 
 		public override bool ValidateUser(string username, string password) {
 			try {
-				using(var user = userEntryAdapter.GetUserEntry(username, password)) {
+				using(var user = userEntryAdapter.GetUserEntry(username.FilterDomain(), password)) {
 					return user.GetProperties(usersConfig.RdnAttribute).Any();
 				}
 			} catch(Exception ex) {
-				log.Debug(c => c(string.Format("Failed to validate user '{0}'.", username), ex));
+				log.Debug(c => c(string.Format("Failed to validate user '{0}'.", username.FilterDomain()), ex));
 			}
 			return false;
 		}
 
 		public override MembershipUser GetUser(string username, bool userIsOnline) {
-			using(var user = userEntryAdapter.GetUserEntryAndLoadProperties(username)) {
+			using(var user = userEntryAdapter.GetUserEntryAndLoadProperties(username.FilterDomain())) {
 				return membershipUserFactory.Create(user);
 			}
 		}
@@ -97,7 +98,7 @@ namespace nJupiter.DataAccess.Ldap {
 
 
 		public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords) {
-			using(var results = userEntryAdapter.FindUsersByName(usernameToMatch, pageIndex, pageSize, out totalRecords)) {
+			using(var results = userEntryAdapter.FindUsersByName(usernameToMatch.FilterDomain(), pageIndex, pageSize, out totalRecords)) {
 				return membershipUserFactory.CreateCollection(results);
 			}
 		}

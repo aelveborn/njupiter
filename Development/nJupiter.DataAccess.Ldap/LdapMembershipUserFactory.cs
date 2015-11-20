@@ -30,6 +30,7 @@ using System.Web.Security;
 
 using nJupiter.DataAccess.Ldap.Configuration;
 using nJupiter.DataAccess.Ldap.DirectoryServices;
+using nJupiter.DataAccess.Ldap.Extensions;
 
 namespace nJupiter.DataAccess.Ldap {
 	public class LdapMembershipUserFactory : IMembershipUserFactory {
@@ -90,8 +91,8 @@ namespace nJupiter.DataAccess.Ldap {
 
 		protected virtual MembershipUser CreateMembershipUser(string name, string providerUserKey, string email, string description, DateTime lastActivitiyDate, DateTime lastLoginDate, DateTime lastLockoutDate, DateTime lastPasswordChangedDate, DateTime creationDate, IDictionary properties, string path) {
 			if(config.Users.MembershipUserWrappingEnabled) {
-			return new LdapMembershipUser(providerName,
-				                            name,
+			return new LdapMembershipUser(providerName.FilterDomain(),
+				                            name.FilterDomain(),
 				                            providerUserKey,
 				                            email,
 				                            String.Empty,
@@ -106,8 +107,8 @@ namespace nJupiter.DataAccess.Ldap {
 				                            properties,
 				                            path);
 			}
-			return new MembershipUser(providerName,
-				                        name,
+			return new MembershipUser(providerName.FilterDomain(),
+				                        name.FilterDomain(),
 				                        providerUserKey,
 				                        email,
 				                        String.Empty,

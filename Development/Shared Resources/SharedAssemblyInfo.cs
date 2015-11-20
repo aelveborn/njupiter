@@ -17,9 +17,9 @@ using System.Security.Permissions;
 #else
 [assembly: AssemblyConfiguration("Release")]
 #if SIGN
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile(@"C:\Projects\nJupiter\Development\nJupiter.snk")]
-[assembly: AssemblyKeyName("")]
+//[assembly: AssemblyDelaySign(false)]
+//[assembly: AssemblyKeyFile(@"C:\Projects\nJupiter\Development\nJupiter.snk")]
+//[assembly: AssemblyKeyName("")]
 #endif
 #endif
 [assembly: PermissionSet(SecurityAction.RequestMinimum, Name="Nothing")]

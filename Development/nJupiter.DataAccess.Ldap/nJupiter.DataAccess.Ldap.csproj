@@ -7,6 +7,9 @@
     <DebugType Condition="'$(DebugType)'==''">full</DebugType>
     <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)'==''">v3.5</TargetFrameworkVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 4.0|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
   <Import Project="..\nJupiter.CSharp.targets" />
   <PropertyGroup>
     <ProjectGuid>{6D989F7A-87CA-4CFC-B17D-21D486102C8D}</ProjectGuid>
@@ -100,6 +103,7 @@
     <Compile Include="DirectoryServices\PropertyValueParser.cs" />
     <Compile Include="DirectoryServices\SearcherFactory.cs" />
     <Compile Include="DirectoryServices\UserEntryAdapter.cs" />
+    <Compile Include="Extensions\DomainExtensions.cs" />
     <Compile Include="IAttributeCollection.cs" />
     <Compile Include="IAttributeValueCollection.cs" />
     <Compile Include="IMembershipUserFactory.cs" />
